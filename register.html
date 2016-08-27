@@ -1,0 +1,29 @@
+<ion-view view-title="注册">
+    <ion-nav-buttons side="left">
+          <a class="icon-back-btn" ng-click="$ionicGoBack();"></a>
+        </ion-nav-buttons>
+	<ion-content style="background:#e9e9e9;" scroll="false" ng-init="form.mobile='';form.authcode='';form.pwd='';form.showPwd=false;form.txtAuthcode='获取验证码'" has-bouncing="false">
+		<div class="container">
+            <i class="icon-mobile"></i>
+            <i class="icon-clear-btn" ng-if="form.mobile != ''" ng-click="form.mobile='';"></i>
+            <input type="text" id="mobile" placeholder="请输入手机号" class="in-mobile" name="mobile" ng-model="form.mobile">
+            <div class="valide row">
+              <input type="text" placeholder="请输入验证码" class="authcode col col-50" style="max-width: 60%;flex: 0 0 60%;" ng-model="form.authcode">
+              <!-- <input type="text" placeholder="请输入验证码" class="authcode col col-50" ng-model="form.authcode"> -->
+              <button ng-disabled="form.txtAuthcode!='获取验证码'&&form.txtAuthcode!='重发验证码'" class="authcode-btn col col-33" id="btnSendCode" ng-click="codeCountDown('register');" style="margin-left: 2%"> <!-- style="margin-left: 2%" -->
+                  {{form.txtAuthcode}}
+              </button>
+            </div>
+            <div class="icon-locked"></div>
+            <!-- <div class="push-right" id="push-right"></div> -->
+            <i ng-class="{'eye-close':form.showPwd,'eye-open':!form.showPwd}" ng-if="form.pwd != ''" ng-click="form.showPwd=!form.showPwd;"></i>
+            <input type="{{form.showPwd?'text':'password'}}" placeholder="请设置6到16位的密码" class="in-pwd" ng-model="form.pwd">
+            <button class="full-btn" id="btn"
+                ng-disabled="form.mobile==''||form.authcode==''||form.pwd==''"
+                ng-class="{'btn-active': form.mobile!=''&&form.authcode!=''&&form.pwd!=''}"
+                ng-click="register('register');"
+            >确定</button>
+            <p class="overlook">点击确定后，表示你已经阅读并同意<a href="#/terms">《阿西吧服务条款》</a></p>       
+        </div>      
+	</ion-content>	
+</ion-view>

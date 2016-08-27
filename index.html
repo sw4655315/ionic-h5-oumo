@@ -1,0 +1,100 @@
+<ion-view view-title="&nbsp;">
+    <ion-nav-buttons side="left" ng-init="classifyids='FL0001'">
+        <a class="icon-btn-logo" href="#/index"></a>
+        <a class="classify-item orange" ng-class="{true:'active'}[classifyids=='FL0001']" on-tap="classify('FL0001')">推荐</a>
+        <a class="classify-item orange" ng-class="{true:'active'}[classifyids=='FL0002']" on-tap="classify('FL0002')">最新</a>
+      </ion-nav-buttons>
+      <ion-nav-buttons side="right">
+        <a class="icon-btn-personal" on-tap="go(['personal'])"></a>
+        <a class="icon-btn-message" on-tap="go(['message'])"></a>
+        <a class="icon-btn-search" on-tap="go(['search'])"></a>
+      </ion-nav-buttons>
+<ion-content style="background:#eee;" lazy-scroll has-bouncing="false">
+    <!--图片轮播-->
+            <ion-slide-box ng-if="bannerList && classifyids=='FL0001'" class="ion-slide" animation="slide-left-right-ios7" active-slide="myActiveSlide" auto-play="true" does-continue="true"  slide-interval="200000" show-pager="true">
+                <ion-slide ng-repeat="banner in bannerList">
+                 <a on-tap="go([banner.type==1?'detail':'link',banner.link])">
+                    <img image-lazy-src="{{banner.photo}}" alt="{{banner.name}}">
+                    <!-- <img src="Images/userDefault_86x86.png" alt="{{banner.name}}"> -->
+                </a>
+                </ion-slide>
+            </ion-slide-box>
+
+            <!--视频-->
+        <div ng-repeat="v in contentList" style="background:#fff;">
+            <div class="row" on-tap="go(['channel',v.channelInfo.ids,v.channelInfo.name])">
+                <div class="col col-10">
+                    <img image-lazy-src="{{v.channelInfo.photo}}" onError="javascript:this.src='Images/userDefault_86x86.png'" class="exo">
+                </div>
+                <div class="col- col-75">
+                    <span class="union" >{{v.channelInfo.name}}</span>
+                </div>
+            </div>
+            <hr class="a-hr" style="margin: 0;width: 100%;margin-left: 0.5rem;border-top: 1px solid #e1e1e1;">
+            <div class="row">
+                <div class="col">
+                    <span on-tap="go(['detail',v.contentInfo.ids])" style="text-decoration: none;"><span class="v-title">{{v.contentInfo.summary}}</span></span>
+                </div> 
+            </div>
+            <div class="row">
+                <div ng-if="play_index!=$index" class="col content-view" style="position:relative;height:8.5rem;" >
+                    <!-- 视频 ~ 图片 -->
+                    <div style="z-index: 99999;opacity: 0.7;filter:alpha(opacity=70);">
+                        <img image-lazy-src="{{v.contentInfo.photo}}" onError="this.src='Images/defaultVideo.png'" style="width:100%;height:8.2rem;position: relative;z-index: -1;" />
+                    </div>
+                    <img src="Images/play.png" style="position:absolute;margin-top:-5.5rem;margin-left:6.2rem;width:15%;" data-link="{{v.contentInfo.link}}" data-photo="{{v.contentInfo.photo}}" on-tap="play($index)" />
+                </div>
+                <div ng-if="play_index==$index" class="col content-view" style="position:relative;height:8.5rem;" >
+                    <video style="width:100%;height:8.2rem;" ng-src="{{trustLink(v.contentInfo.link)}}" ng-poster="{{v.contentInfo.photo}}" autoplay controls webkit-playsinline="true" ></video>
+                </div>
+            </div>
+            <div class="row" style="padding:0;margin-top:-0.4rem;">
+                <div class="col col-10" style="margin-left:1%;" ng-init="pmap[v.contentInfo.ids].isPraised=(v.contentInfo.praised == 0?false:true);pmap[v.contentInfo.ids].praiseInfo=v.praiseInfo">
+                    <img ng-if="pmap[v.contentInfo.ids].isPraised" src="Images/heart-full.png" on-tap="praised(v.contentInfo.ids)" class="like">
+                    <img ng-if="!pmap[v.contentInfo.ids].isPraised" src="Images/heart-null.png" on-tap="praised(v.contentInfo.ids)" class="like">
+                </div>
+                <div class="col col-10" style="margin-left:1.5%;">
+                    <img src="Images/wechat.png" class="wechat" on-tap="go(['detail',v.contentInfo.ids])">
+                </div>
+                <div class="col col-10" style="margin-left:1%;">
+                    <img src="Images/break.png" class="break" on-tap="shareModal.alert(['detail',v.contentInfo],['content',v.contentInfo])">
+                </div>
+            </div>
+            <div class="row" style="margin-bottom:2%;">
+                <div class="col">
+                    <p style="margin: 0;vertical-align: middle;display: flex;justify-content: space-between;align-items: center;margin-left:0.2rem;">
+                        <span class="comment"><i class="ion-heart"></i> 
+                            <span ng-if="pmap[v.contentInfo.ids].praiseInfo.praiseTotal > 0" on-tap="go(['praised',v.contentInfo.ids])">
+                                <span ng-repeat = "p in  pmap[v.contentInfo.ids].praiseInfo.praise">
+                                    <span ng-if="$index > 0 && $index < 3">, </span><span ng-if="$index < 3">{{p.nickname}}</span>
+                                </span>
+                                <span ng-if="pmap[v.contentInfo.ids].praiseInfo.praiseTotal > 3">
+                                    等{{pmap[v.contentInfo.ids].praiseInfo.praiseTotal}}个赞
+                                </span>
+                            </span>
+                        </span>
+                    </p>
+                </div>
+            </div>
+            <div class="row" style="padding-bottom: 12px;">
+                <div class="col">
+                    <p style="margin: 0;vertical-align: middle;display: flex;justify-content: space-between;align-items: center;margin-left:0.2rem;">
+                        <span class="look"><i class="ion-eye"></i>&nbsp;浏览了{{v.contentInfo.views + v.contentInfo.added_views}}次</span>
+                    </p>
+                </div>
+            </div>
+            <div class="discuss" on-tap="go(['detail',v.contentInfo.ids])">
+                <div ng-repeat="c in v.commentInfo.comment" class="over-txt-hid"><span class="name">{{JSON.parse(c.my_info).nickname}}：</span>{{c.message}}</div>
+            </div>
+            <div ng-if="v.commentInfo.total > 3" class="row" style="padding:0;margin-top:-0.3rem;" on-tap="go(['detail',v.contentInfo.ids])">
+                <div class="col">
+                    <p style="margin:0;">
+                        <span class="aco">查看页面全部{{v.commentInfo.total}}条评论</span>
+                        <a href="" style="text-decoration:none;font-size:0.45rem;color:#b3b3b3;"> &gt;</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <button ng-if="!page.last" class="button button-full button-light" on-tap="load()">查看更多</button>
+</ion-content>
+</ion-view>

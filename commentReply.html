@@ -1,0 +1,31 @@
+<ion-view view-title="评论"><!-- 频道列表  {{channelTitle}}-->
+    <ion-nav-buttons side="left">
+      <a class="icon-back-btn" on-tap="$ionicGoBack();"></a>
+    </ion-nav-buttons>
+    <ion-nav-buttons side="right" >
+      <a ng-class="{true:'icon-menu-v',false:'icon-menu-h'}[menuToggle]" on-tap="toggleMenu()"></a>
+    </ion-nav-buttons>
+ <!--隐藏导航条-->
+    <div ng-show="menuToggle" class="row menu-tab has-header">
+        <div class="col" on-tap="go(['index'])"><i class="icon-menu-home"></i></div>
+        <div class="col" on-tap="go(['search'])"><i class="icon-menu-search"></i></div>
+        <div class="col" on-tap="go(['personal'])"><i class="icon-menu-personal"></i></div>
+        <div class="col" on-tap="go(['share'])"><i class="icon-menu-share"></i></div>
+    </div>
+<ion-content style="background:#eee;" has-bouncing="false"><!-- has-bouncing="false" -->
+    <ion-list>
+        <span ng-repeat = "v in replyList">
+        <ion-item class="item-avatar item-icon-right no-border" ng-init="other=JSON.parse(v.other_info)">
+            <img ng-src="{{other.avator || '-'}}" onError="this.src='Images/userDefault_86x86.png'">
+            <h2 class="comment-name">{{other.nickname}}</h2>
+            <p class="comment-time"><i class="ion-clock"></i><span>{{moment(v.create_time).fromNow()}}</span></p>
+            <p class="comment-discuss">回复:{{v.message}}</p>
+            <img class="icon comment-photo" ng-src="{{v.content_photo || '-'}}" onError="this.src='Images/userDefault_86x86.png'">
+        </ion-item>
+        <hr class="a-hr">
+        </span>
+        <button ng-if="!page.last" class="button button-full button-light" on-tap="load()">查看更多</button>
+    </ion-list>
+    
+</ion-content>
+</ion-view>

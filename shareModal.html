@@ -1,0 +1,52 @@
+<ion-modal-view class="share-modal">
+	  <ion-content scroll="false" has-bouncing="false">
+      <div class="row">
+        <div class="col">
+          <span ng-if="shareShow.weixin" on-tap="shareModal.share('weixin')">
+            <i class="icon-share-weixin"></i>
+            <span>微信</span>
+          </span>
+          <span ng-if="!shareShow.weixin">&nbsp;</span>
+        </div>
+        <div class="col">
+          <span ng-if="shareShow.sina" on-tap="shareModal.share('sina')">
+            <i class="icon-share-sina"></i>
+            <span>新浪微博</span>
+          </span>
+          <span ng-if="!shareShow.sina">&nbsp;</span>
+        </div>
+        <div class="col">
+          <span ng-if="shareShow.qq" on-tap="shareModal.share('qq')">
+            <i class="icon-share-qq"></i>
+            <span>QQ</span>
+          </span>
+          <span ng-if="!shareShow.qq">&nbsp;</span>
+        </div>
+        <div class="col">
+          <span ng-if="shareShow.qzone" on-tap="shareModal.share('qzone')">
+            <i class="icon-share-qzone"></i>
+            <span>QQ空间</span>
+          </span>
+          <span ng-if="!shareShow.qzone">&nbsp;</span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <span ng-if="shareShow.collect" on-tap="shareModal.share('collect')">
+            <i class="icon-share-collect"></i>
+            <span>收藏</span>
+          </span>
+          <span ng-if="!shareShow.collect">&nbsp;</span>
+        </div>
+        <div class="col">
+          <span ng-if="shareShow.report" on-tap="shareModal.share('report')">
+            <i class="icon-share-report"></i>
+            <span>举报</span>
+          </span>
+          <span ng-if="!shareShow.report">&nbsp;</span>
+        </div>
+        <div class="col">&nbsp;</div>
+        <div class="col">&nbsp;</div>
+      </div>
+	  </ion-content>
+</ion-modal-view>

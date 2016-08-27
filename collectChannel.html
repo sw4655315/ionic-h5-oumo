@@ -1,0 +1,20 @@
+<ion-view view-title="收藏的频道"><!-- 频道列表  {{channelTitle}}-->
+    <ion-nav-buttons side="left" >
+        <a class="icon-back-btn" on-tap="$ionicGoBack();"></a>
+      </ion-nav-buttons>
+<ion-content style="background:#eee;" has-bouncing="false">
+    <ion-list>
+        <span ng-repeat = "v in channelList">
+        <ion-item class="item-avatar item-icon-right no-border" ng-href="#/channel/1/{{v.ids}}/{{v.name}}">
+            <img ng-src="{{v.photo}}">
+            <h2>{{v.name}}</h2>
+            <p>{{v.summary}}</p>
+            <i class="icon icon-axibar-forward"></i>
+        </ion-item>
+        <hr class="a-hr">
+        </span>
+        <button ng-if="!page.last" class="button button-full button-light" on-tap="load()">查看更多</button>
+    </ion-list>
+    
+</ion-content>
+</ion-view>

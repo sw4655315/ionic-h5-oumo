@@ -1,0 +1,24 @@
+<ion-view view-title="{{channelTitle || '频道简介'}}">
+    <ion-nav-buttons side="left">
+       <a class="icon-back-btn" ng-click="$ionicGoBack();"></a>
+    </ion-nav-buttons>
+    <ion-nav-buttons side="right">
+       <a class="button button-clear orange" ng-click="shareModal.alert(['channel',channel],['channel',channel])">分享</a>
+    </ion-nav-buttons>
+    <ion-content scroll="false" style="background:#eee;" has-bouncing="false">
+				<ion-list>
+					<ion-item class="item-avatar no-border">
+						<img ng-src="{{channel.photo || '-'}}" onError="this.src='Images/userDefault_80x80.png'" class="head-portrait">
+						<h2 class="icon-name">{{channel.name || '-'}}</h2>
+						<h6>
+							<span class="icon-star">{{channel.classify_name || '-'}}</span>
+                			<span class="icon-star" style="padding-left:10px;">{{channel.total_content || '-'}}个视频</span>
+						</h6>
+					</ion-item>
+					<hr class="a-hr">
+					<ion-item class=" no-border">
+						<span class="icon-brief">{{channel.summary || '-'}}</span>
+					</ion-item>
+				</ion-list>
+    </ion-content>
+</ion-view>

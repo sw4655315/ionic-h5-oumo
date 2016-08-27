@@ -1,0 +1,30 @@
+<ion-view view-title="赞过的用户"><!-- 频道列表  {{channelTitle}}-->
+    <ion-nav-buttons side="left" >
+        <a class="icon-back-btn" on-tap="$ionicGoBack();"></a>
+      </ion-nav-buttons>
+    <ion-nav-buttons side="right" >
+      <a ng-class="{true:'icon-menu-v',false:'icon-menu-h'}[menuToggle]" on-tap="toggleMenu()"></a>
+    </ion-nav-buttons>
+    <!--隐藏导航条-->
+    <div ng-show="menuToggle" class="row menu-tab has-header">
+
+        <div class="col" on-tap="go(['index'])"><i class="icon-menu-home"></i></div>
+        <div class="col" on-tap="go(['search'])"><i class="icon-menu-search"></i></div>
+        <div class="col" on-tap="go(['personal'])"><i class="icon-menu-personal"></i></div>
+        <div class="col" on-tap="go(['share'])"><i class="icon-menu-share"></i></div>
+    </div>
+    <ion-content style="background:#eee;">
+    	<!--头像列表-->
+        <ion-list>
+            <span ng-repeat="user in praisedList">
+            <ion-item class="item-avatar no-border" >
+                <img ng-src="{{user.avator || '-'}}" onError="this.src='Images/userDefault_80x80.png">
+                <h2>{{user.nickname || '&nbsp;'}}</h2>
+                <p class="icon-star">{{user.summary || '&nbsp;'}}</p>
+            </ion-item>
+            <hr class="a-hr">
+            </span>
+            <button ng-if="!page.last" class="button button-full button-light" on-tap="load()">查看更多</button>
+        </ion-list>
+    </ion-content>	
+</ion-view>

@@ -1,0 +1,114 @@
+<ion-view view-title="视频详情">
+    <ion-nav-buttons side="left">
+      <a class="icon-back-btn" on-tap="$ionicGoBack();"></a>
+    </ion-nav-buttons>
+    <ion-nav-buttons side="right" >
+      <a ng-class="{true:'icon-menu-v',false:'icon-menu-h'}[menuToggle]" on-tap="toggleMenu()"></a>
+    </ion-nav-buttons>
+ <!--隐藏导航条-->
+    <div ng-show="menuToggle" class="row menu-tab has-header">
+        <div class="col" on-tap="go(['index'])"><i class="icon-menu-home"></i></div>
+        <div class="col" on-tap="go(['search'])"><i class="icon-menu-search"></i></div>
+        <div class="col" on-tap="go(['personal'])"><i class="icon-menu-personal"></i></div>
+        <div class="col" on-tap="go(['share'])"><i class="icon-menu-share"></i></div>
+    </div>
+
+<ion-content style="background:#eee;" class="detail-content" has-bouncing="false">
+       <ion-refresher class="spinner-dark" pulling-text="下拉刷新" on-refresh="refresh()" spinner="dots"></ion-refresher>
+        <div class="row">
+            <div class="col col-10">
+                <img ng-src="{{channel.photo}}" onError="this.src='Images/userDefault_86x86.png'" class="exo">
+            </div>
+            <div class="col- col-75">
+                <span class="union">{{channel.name}}</span>
+            </div>
+        </div>
+        <hr class="a-hr" style="margin: 0;width: 100%;border-top: 1px solid #e1e1e1;">
+        <div class="row">
+            <div class="col">
+                <span class="v-title" >{{contents.summary}}</span>
+            </div>
+        </div>
+        <div class="row">
+            <div ng-if="!playing" class="col content-view" style="position:relative;height:8.5rem;" >
+                    <!-- 视频 ~ 图片 -->
+                    <div style="z-index: 99999;opacity: 0.7;filter:alpha(opacity=70);"> 
+                        <img ng-src="{{contents.photo}}" onError="this.src='Images/defaultVideo.png'" style="width:100%;height:8.2rem;position: relative;z-index: -1;">
+                    </div>
+                    <img src="Images/play.png" style="position:absolute;margin-top:-5.5rem;margin-left:6.2rem;width:15%;" on-tap="play()"/>
+            </div>
+            <div ng-if="playing" class="col content-view" style="position:relative;height:8.5rem;" >
+                <video id="player" style="width:100%;height:8.2rem;" ng-src="{{trustLink(contents.link)}}" ng-poster="{{contents.photo}}" autoplay controls webkit-playsinline preload="none"></video>
+            </div>
+        </div>
+        
+        <div class="row" style="padding:0;margin-top:-0.4rem;">
+                <div class="col col-10" style="margin-left:1%;" >
+                    <img ng-if="pmap.isPraised" src="Images/heart-full.png" on-tap="praised(contents.ids)" class="like">
+                    <img ng-if="!pmap.isPraised" src="Images/heart-null.png" on-tap="praised(contents.ids)" class="like">
+                </div>
+                <!-- <div class="col col-10" style="margin-left:1.5%;">
+                    <img src="Images/wechat.png" class="wechat">
+                </div> -->
+                <div class="col col-10" style="margin-left:1%;">
+                    <img src="Images/break.png" class="break" on-tap="shareModal.alert(['detail',contents],['content',contents])">
+                </div>
+            </div>
+            <div class="row" style="height:1rem;">
+                <div class="col">
+                    <p style="margin: 0;vertical-align: middle;display: flex;justify-content: space-between;align-items: center;margin-left:0.2rem;">
+                        <span class="comment">
+                            <span class="ion-heart"></span>&nbsp;
+                            <span ng-if="pmap.praiseInfo.praiseTotal > 0" on-tap="go(['praised',contents.ids])">
+                                <span ng-repeat = "v in  pmap.praiseInfo.praise">
+                                    <span ng-if="$index > 0 && $index < 3">, </span>
+                                    <span ng-if="$index < 3">{{v.nickname}}</span>
+                                </span>
+                                <span ng-if="pmap.praiseInfo.praiseTotal > 3">
+                                    等{{pmap.praiseInfo.praiseTotal}}个赞
+                                </span>
+                            </span>
+                        </span>
+                    </p>
+                </div>
+            </div>
+            <div class="row" style="margin-bottom:3%;padding-bottom: 1rem;">
+                <div class="col">
+                    <p style="margin: 0;vertical-align: middle;display: flex;justify-content: space-between;align-items: center;margin-left:0.2rem;">
+                        <span class="look"><span class="ion-eye"></span>&nbsp;浏览了{{contents.views + contents.added_views}}次</span>
+                    </p>
+                </div>
+            </div>
+            <!-- 评论展示 start -->
+        <div id="content" style="background:#eee;">
+            <div id="comment">
+                <div class="row" style="padding-top: 3%;padding-lft:2%;" ng-repeat="v in commentList">
+                    <div class="col col-10" ng-init="my=JSON.parse(v.my_info);other=JSON.parseQuiet(v.other_info)">
+                        <a ng-href="#/personal/{{my.ids}}">
+                        <img ng-src="{{my.avator}}" onError="this.src='Images/userDefault_86x86.png'" style="width:1.75rem;height:1.75rem;border-radius: 50%;">
+                        </a>
+                    </div>
+                    <div class="col col-90">
+                        <p style="margin-left: 0.5rem;">
+                            <span class="left">{{my.nickname}}</span>
+                            <span class="time">{{moment(v.create_time).fromNow()}}</span>
+                        </p>
+                        <div class="bubbly">
+                        <span class="change" on-tap="reply(my)">
+                            <span ng-if="v.other_info">回复&nbsp;{{other.nickname}}:</span>{{v.message}}
+                        </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div ng-if="!page.last" id="loadMoreBtn" style="background:#eee;text-align: center;">
+                    <button class="button button-full button-light load-more-btn" on-tap="loadComment()">查看更多<tton>
+            </div>
+        </div>
+        <!-- 评论展示 end -->
+</ion-content>
+<ion-footer-bar >
+    <input id="comment-msg" type="number" class="comment-msg" ng-model="sendInput.val" placeholder="{{sendInput.placeHolder}}" >
+    <button class="button pull-right comment-send-btn " ng-click="sendMsg()">发送</button>
+</ion-footer-bar>
+</ion-view>

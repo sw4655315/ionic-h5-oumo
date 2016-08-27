@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="axibar" style="font-size:16px;">
+<head>
+        <meta charset="utf-8">
+	    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,shrink-to-fit=no,user-scalable=no,minimal-ui" >
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <meta name="format-detection" content="telephone=no" />
+        <!-- 用百度打开网页可能会对其进行转码（比如贴广告），避免转码可添加如下meta -->
+        <meta http-equiv="Cache-Control" content="no-siteapp" />
+            <!-- UC默认竖屏` UC强制全屏 -->
+        <meta name="full-screen" content="yes">
+        <meta name="browsermode" content="application">
+        <!-- QQ强制竖屏` QQ强制全屏 -->
+        <meta name="x5-orientation" content="portrait">
+        <meta name="x5-page-mode" content="app">
+        <meta name="x5-colormode" content="x5-nightmode">
+        <title>阿西吧</title>
+        <link href="http://cdn.bootcss.com/ionic/1.3.1/css/ionic.min.css" rel="stylesheet">
+        <link href="http://cdn.bootcss.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet">
+	    <!-- <link href="CSS/toaster.min.css" rel="stylesheet"> -->
+        <link href="CSS/login.css" rel="stylesheet">
+        <!-- <link href="CSS/register.css" rel="stylesheet"> -->
+        <!-- <link href="CSS/reset.css" rel="stylesheet"> -->
+        <!-- <link href="CSS/font-awesome.min.css" rel="stylesheet"> -->
+        <script src="http://cdn.bootcss.com/ionic/1.3.1/js/ionic.bundle.min.js"></script>
+        <!-- // <script src="JS/angular-animate.min.js"></script> -->
+        <script src="JS/rem.js"></script> 
+        <script id="-mob-share" src="http://f1.webshare.mob.com/code/mob-share.js?appkey=1362d982e489b"></script>
+        <script src="JS/axibar.js"></script>
+        <!-- // <script src="JS/lodash.min.js"></script> -->
+        <script src="http://cdn.bootcss.com/moment.js/2.14.1/moment.min.js"></script>
+        <script src="http://cdn.bootcss.com/moment.js/2.14.1/locale/zh-cn.js"></script>
+        <script src="JS/url.min.js"></script>
+        <!-- // <script src="JS/toaster.min.js"></script> -->
+        <script src="http://cdn.bootcss.com/ngStorage/0.3.10/ngStorage.min.js"></script>
+        <script src="JS/ionic-image-lazy-load.js"></script>
+        <script src="JS/ion-app.js"></script>
+        <script src="JS/ion-config.js"></script>
+        <script src="JS/ion-controller.js"></script>
+    </head>
+    <script>
+        var ua = navigator.userAgent.toLowerCase();
+        var B_Inner = /.*(micromessenger| qq\/).*/.test(ua),
+            B_android = /.*android.*/.test(ua),
+            B_ios=/.*(iphone|ipad|ipod).*/.test(ua);
+    </script>
+</head>
+
+<body >
+    <ion-nav-bar class="orange nav-title-slide-ios7" align-title="center" ></ion-nav-bar>
+    <ion-nav-view></ion-nav-view>
+</body> 
+</html>

@@ -1,0 +1,34 @@
+  <ion-view view-title="登录">
+    <ion-nav-buttons side="left">
+        <a class="icon-close-btn" style="margin-right: 5px;" ng-click="$ionicGoBack()"></a>
+      </ion-nav-buttons>
+      <ion-nav-buttons side="right">
+        <a class="button button-clear orange" href="#/register">注册</a>
+      </ion-nav-buttons>
+	  <ion-content scroll="false" style="background:#e9e9e9;" class="inner-head" has-bouncing="false">
+      <!--内容-->
+		  <div class="container" ng-init="loginForm.mobile='';loginForm.pwd='';">
+			        <i class="icon-mobile"></i>
+              <i class="icon-clear-btn" ng-if="loginForm.mobile != ''" ng-click="loginForm.mobile='';"></i>
+			        <input id="mobile" type="text" placeholder="请输入手机号" class="in-mobile" ng-model="loginForm.mobile" name="mobile"> <!--手机号1开头11位-->
+			        <i class="icon-locked"></i>
+              <i class="icon-clear-btn" ng-if="loginForm.pwd != ''" ng-click="loginForm.pwd='';"></i>
+			        <input id="pwd" type="password" placeholder="请输入密码" class="in-pwd" ng-model="loginForm.pwd">
+			        <button ng-disabled="loginForm.mobile == '' || loginForm.pwd == ''"  id="login_btn" class="full-btn" ng-class="{'btn-active': loginForm.mobile != '' && loginForm.pwd != ''}" ng-click="login();">登录</button>
+			        <a href="#/reset" style="text-decoration: none;"><p class="forget-pwd" style="text-align: right;">忘记密码</p></a>
+		  </div>
+      <!--第三方登录-->
+      <footer class="footer">
+          <p class="fast-login">
+              <i class="line"></i>
+                  <span class="apply">快捷登录</span>
+              <i class="line"></i>
+          </p>
+          <div class="row" >
+              <div class="col col-offset-10 col-20 icon-wechat"></div>
+              <div class="col col-offset-10 col-20 icon-sina"></div>
+              <div class="col col-offset-10 col-20 icon-techent"></div>
+          </div>
+      </footer>
+	  </ion-content>	
+</ion-view>

@@ -1,0 +1,27 @@
+    <ion-view view-title="消息">
+    <ion-nav-buttons side="left">
+          <a class="icon-back-btn" ng-click="$ionicGoBack();"></a>
+        </ion-nav-buttons>
+        <ion-content scroll="false" style="background:#eee;" has-bouncing="false">
+        <ion-list class="message-html">
+                <div class="item item-divider divider-small no-border"></div>
+                <ion-item class="item-icon-left item-icon-right no-border" ng-click="go(['praisedReply'])">
+                    <i class="icon icon-axibar-like"></i>
+                    <span>被赞</span>
+                    <i class="icon icon-axibar-forward"></i>
+                </ion-item>
+                <hr class="a-hr">
+                <ion-item class="item-icon-left item-icon-right no-border" ng-click="go(['commentReply'])">
+                    <i class="icon icon-axibar-discuss"></i>
+                    <span>评论</span>
+                    <i class="icon icon-axibar-forward"></i>
+                </ion-item>
+                <hr class="a-hr">
+                <ion-item class="item-icon-left item-icon-right no-border" ng-click="go(['commentReply'])">
+                    <i class="icon icon-axibar-message"></i>
+                    <span>通知</span>
+                    <i class="icon icon-axibar-forward"></i>
+                </ion-item>
+            </ion-list>
+        </ion-content>
+</ion-view>
